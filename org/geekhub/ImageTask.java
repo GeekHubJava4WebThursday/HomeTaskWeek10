@@ -1,6 +1,13 @@
 package org.geekhub;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * Represents worker that downloads image from URL to specified folder.<br/>
@@ -20,7 +27,16 @@ public class ImageTask implements Runnable {
      */
     @Override
     public void run() {
-       //implement me
+        try {
+            if (!Files.exists(Paths.get(folder))) {
+                new File(folder).mkdir();
+            }
+            BufferedImage image = ImageIO.read(new ByteArrayInputStream(ConnectionUtils.getData(url)));
+            String fileName = folder + buildFileName(url);
+            ImageIO.write(image, "jpg", new File(fileName));
+        } catch (IOException e) {
+            System.out.println("Error while download image: " + e.getMessage());
+        }
     }
 
     //converts URL to unique file name

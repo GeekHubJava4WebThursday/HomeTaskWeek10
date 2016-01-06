@@ -1,6 +1,8 @@
 package org.geekhub;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 
 /**
@@ -16,7 +18,14 @@ public class ConnectionUtils {
      * @throws IOException
      */
     public static byte[] getData(URL url) throws IOException {
-        //implement me
-        return null;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        byte[] buffer = new byte[8 * 1024];
+        try (InputStream is = url.openConnection().getInputStream()) {
+            int count;
+            while ((count = is.read(buffer)) != -1) {
+                baos.write(buffer, 0, count);
+            }
+        }
+        return baos.toByteArray();
     }
 }

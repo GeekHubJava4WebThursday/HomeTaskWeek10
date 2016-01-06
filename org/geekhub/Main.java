@@ -16,8 +16,12 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         String command;
         while(!"exit".equals(command = scanner.next())) {
-            imageCrawler.downloadImages(command);
-            System.out.println("...and another url:");
+            try {
+                imageCrawler.downloadImages(command);
+                System.out.println("...and another url:");
+            } catch (IOException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
         }
         imageCrawler.stop();
     }
