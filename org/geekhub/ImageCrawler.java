@@ -18,7 +18,7 @@ public class ImageCrawler {
 
     //number of threads to download images simultaneously
     public static final int NUMBER_OF_THREADS = 10;
-    public static final int NUMBER_OF_PAGES = 10;
+    public static final int NUMBER_OF_PAGES = 100;
 
     private ExecutorService executorService = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
     private String folder;

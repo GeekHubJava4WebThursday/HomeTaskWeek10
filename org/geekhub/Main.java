@@ -9,7 +9,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         ImageCrawler imageCrawler = new ImageCrawler(FOLDER_TO_DOWNLOAD);
-        imageCrawler.downloadImages("http://trinixy.ru/16356-prikolnye_kartinki_ochen_mnogo.html");
+        imageCrawler.downloadImages("http://kinoafisha.ua/cinema/");
 
         System.out.println("While it's loading you can enter another url to start download images:");
 
