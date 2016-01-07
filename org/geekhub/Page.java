@@ -3,6 +3,7 @@ package org.geekhub;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,7 +26,7 @@ public class Page {
      */
     public Page(URL url) throws IOException {
         this.url = url;
-        this.content = new String(ConnectionUtils.getData(url));
+        this.content = new String(ConnectionUtils.getData(url), StandardCharsets.UTF_8);
     }
 
     /**
