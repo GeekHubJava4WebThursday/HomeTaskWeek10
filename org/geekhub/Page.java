@@ -12,8 +12,8 @@ import java.util.regex.Pattern;
  * Allows high-level access to page elements.
  */
 public class Page {
-    Pattern linkPattern = Pattern.compile("<a\\s(?:[^\\s>]*?\\s)*?href=\"(.*?)\".*?>");
-    Pattern imageLinkPattern = Pattern.compile("<img.*?src=\"(.*?)\".*?(/>|</img>)");
+    Pattern linkPattern = Pattern.compile("<a\\s(?:[^\\s>]*?\\s)*?href=\"(https?.*?)\".*?>");
+    Pattern imageLinkPattern = Pattern.compile("<img.*?src=\"(.*?)\".*?(/>|)");
 
     private String content;
     private URL url;
