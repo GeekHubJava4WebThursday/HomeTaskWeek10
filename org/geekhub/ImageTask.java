@@ -1,6 +1,10 @@
 package org.geekhub;
 
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Represents worker that downloads image from URL to specified folder.<br/>
@@ -20,7 +24,13 @@ public class ImageTask implements Runnable {
      */
     @Override
     public void run() {
-       //implement me
+        Path path = Paths.get(folder + "/" + buildFileName(url));
+
+        try {
+            Files.write(path, ConnectionUtils.getData(url));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //converts URL to unique file name
