@@ -1,6 +1,9 @@
 package org.geekhub;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 
 /**
@@ -16,7 +19,16 @@ public class ConnectionUtils {
      * @throws IOException
      */
     public static byte[] getData(URL url) throws IOException {
-        //implement me
-        return null;
+        InputStream in = new BufferedInputStream(url.openStream());
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        int len = 0;
+        byte[] bytes = new byte[1024];
+        while (-1!=(len=in.read(bytes))){
+            out.write(bytes,0,len);
+        }
+        in.close();
+        out.close();
+
+        return out.toByteArray();
     }
 }

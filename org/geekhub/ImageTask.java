@@ -1,5 +1,9 @@
 package org.geekhub;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URL;
 
 /**
@@ -20,7 +24,22 @@ public class ImageTask implements Runnable {
      */
     @Override
     public void run() {
-       //implement me
+        OutputStream image = null;
+        try {
+            byte[] imageBytes = ConnectionUtils.getData(url);
+            String imagePath = folder + "\\" + buildFileName(url);
+            image = new BufferedOutputStream(new FileOutputStream(imagePath));
+            image.write(imageBytes);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (image!=null) try {
+                image.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     //converts URL to unique file name
