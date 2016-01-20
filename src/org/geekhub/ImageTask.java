@@ -1,7 +1,8 @@
 package org.geekhub;
 
-import java.io.*;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -10,8 +11,6 @@ import java.nio.file.Paths;
  * Name of the image will be constructed based on URL. Names for the same URL will be the same.
  */
 public class ImageTask implements Runnable {
-
-    public static final int BUFFER_SIZE = 8 * 1024;
 
     private URL url;
     private String folder;
@@ -27,14 +26,8 @@ public class ImageTask implements Runnable {
     @Override
     public void run() {
         Path path = Paths.get(folder, buildFileName(url));
-        try (BufferedInputStream inputStream = new BufferedInputStream(url.openStream(), BUFFER_SIZE);
-             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-             FileOutputStream file = new FileOutputStream(path.toFile())){
-            int bytes;
-            while((bytes = inputStream.read()) >= 0) {
-                outputStream.write(bytes);
-            }
-            outputStream.writeTo(file);
+        try {
+            Files.write(path, ConnectionUtils.getData(url));
         } catch (IOException e) {
             e.printStackTrace();
         }
