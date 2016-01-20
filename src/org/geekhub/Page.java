@@ -3,7 +3,9 @@ package org.geekhub;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,14 +15,14 @@ import java.util.regex.Pattern;
  */
 public class Page {
     Pattern linkPattern = Pattern.compile("<a\\s(?:[^\\s>]*?\\s)*?href=\"(.*?)\".*?>");
-    Pattern imageLinkPattern = Pattern.compile("<img.*?src=\"(.*?)\".*?(/>|</img>)");
+    Pattern imageLinkPattern = Pattern.compile("<img.*?src=\"(.*?)\".*?(/>|</img>)", Pattern.DOTALL);
 
     private String content;
     private URL url;
 
     /**
      * Be careful, constructor downloads content, it could be slow.
-     * @param url
+     * @param url to page with links
      * @throws IOException
      */
     public Page(URL url) throws IOException {
