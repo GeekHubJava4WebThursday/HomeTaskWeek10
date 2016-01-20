@@ -1,8 +1,8 @@
 package org.geekhub;
 
-import java.io.BufferedReader;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URL;
 
 /**
@@ -21,17 +21,18 @@ public class ConnectionUtils {
      * @throws IOException
      */
     public static byte[] getData(URL url) throws IOException {
-        byte[] bytes;
-        StringBuilder content = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()), BUFFER_SIZE)){
-            String line;
+        byte[] data;
+        try (BufferedInputStream inputStream = new BufferedInputStream(url.openStream(), BUFFER_SIZE);
+             ByteArrayOutputStream outputStream = new ByteArrayOutputStream(BUFFER_SIZE)) {
+            byte[] buffer = new byte[BUFFER_SIZE];
+            int num;
             int size = 0;
-            while ((line = reader.readLine()) != null && size < MAX_CONTENT_SIZE) {
-                content.append(line);
-                size += line.length();
+            while ((num = inputStream.read(buffer)) != -1 && size < MAX_CONTENT_SIZE) {
+                outputStream.write(buffer, 0, num);
+                size += num;
             }
-            bytes = content.toString().getBytes();
+            data = outputStream.toByteArray();
         }
-        return bytes;
+        return data;
     }
 }
