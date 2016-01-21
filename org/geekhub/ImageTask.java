@@ -1,5 +1,6 @@
 package org.geekhub;
 
+import java.io.*;
 import java.net.URL;
 
 /**
@@ -20,7 +21,13 @@ public class ImageTask implements Runnable {
      */
     @Override
     public void run() {
-       //implement me
+        String path = folder + "/" + buildFileName(url);
+        try {
+            FileOutputStream stream = new FileOutputStream(path);
+            stream.write(ConnectionUtils.getData(url));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //converts URL to unique file name
