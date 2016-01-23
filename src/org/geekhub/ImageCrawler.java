@@ -25,7 +25,7 @@ public class ImageCrawler {
 
     /**
      * Call this method to start download images from specified URL.
-     * @param urlToPage
+     * @param urlToPage url to web page
      * @throws IOException
      */
     public void downloadImages(String urlToPage) throws IOException {

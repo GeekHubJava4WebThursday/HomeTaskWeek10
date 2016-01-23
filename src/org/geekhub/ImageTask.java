@@ -23,8 +23,11 @@ public class ImageTask implements Runnable {
        //implement me
     }
 
-    //converts URL to unique file name
+    /**
+     * Converts URL to unique file name
+     */
     private String buildFileName(URL url) {
         return url.toString().replaceAll("[^a-zA-Z0-9-_\\.]", "_");
     }
+
 }
