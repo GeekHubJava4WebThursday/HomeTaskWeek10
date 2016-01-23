@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static final String FOLDER_TO_DOWNLOAD = "d:/images/";
+    public static final String FOLDER_TO_DOWNLOAD = "/tmp/images/";
 
     public static void main(String[] args) throws IOException {
         ImageCrawler imageCrawler = new ImageCrawler(FOLDER_TO_DOWNLOAD);

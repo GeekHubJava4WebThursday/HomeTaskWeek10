@@ -1,5 +1,6 @@
 package org.geekhub;
 
+import java.io.*;
 import java.net.URL;
 
 /**
@@ -20,11 +21,24 @@ public class ImageTask implements Runnable {
      */
     @Override
     public void run() {
-       //implement me
+        try (
+            BufferedInputStream inputStream = new BufferedInputStream(url.openStream());
+            BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(folder + buildFileName(url)))
+        ) {
+            int b;
+            while ((b = inputStream.read()) != -1) {
+                outputStream.write(b);
+            }
+        } catch (IOException e) {
+            System.out.println("Error while loading data from " + url);
+        }
     }
 
-    //converts URL to unique file name
+    /**
+     * Converts URL to unique file name
+     */
     private String buildFileName(URL url) {
         return url.toString().replaceAll("[^a-zA-Z0-9-_\\.]", "_");
     }
+
 }

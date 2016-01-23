@@ -20,7 +20,7 @@ public class Page {
 
     /**
      * Be careful, constructor downloads content, it could be slow.
-     * @param url
+     * @param url url to web page
      * @throws IOException
      */
     public Page(URL url) throws IOException {
@@ -53,4 +53,5 @@ public class Page {
         }
         return links;
     }
+
 }
