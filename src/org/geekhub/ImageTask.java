@@ -1,5 +1,6 @@
 package org.geekhub;
 
+import java.io.*;
 import java.net.URL;
 
 /**
@@ -20,7 +21,17 @@ public class ImageTask implements Runnable {
      */
     @Override
     public void run() {
-       //implement me
+        try (
+            BufferedInputStream inputStream = new BufferedInputStream(url.openStream());
+            BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(folder + buildFileName(url)))
+        ) {
+            int b;
+            while ((b = inputStream.read()) != -1) {
+                outputStream.write(b);
+            }
+        } catch (IOException e) {
+            System.out.println("Error while loading data from " + url);
+        }
     }
 
     /**
