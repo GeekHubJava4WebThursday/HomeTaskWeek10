@@ -3,6 +3,7 @@ package org.geekhub;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collection;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -29,7 +30,10 @@ public class ImageCrawler {
      * @throws IOException
      */
     public void downloadImages(String urlToPage) throws IOException {
-        //implement me
+        Page page = new Page(new URL(urlToPage));
+        page.getImageLinks().stream()
+                .filter(this::isImageURL)
+                .forEach(url -> executorService.submit(new ImageTask(url, folder)));
     }
 
     /**
@@ -39,12 +43,11 @@ public class ImageCrawler {
         executorService.shutdown();
     }
 
-    //detects is current url is an image. Checking for popular extensions should be enough
     private boolean isImageURL(URL url) {
-        //implement me
-        return false;
+        String u = url.toString();
+        return u.endsWith(".png") || u.endsWith(".jpg") || u.endsWith(".jpeg") ||
+                u.endsWith(".gif") || u.endsWith(".ico") || u.endsWith(".svg") ||
+                u.endsWith(".bmp");
     }
-
-
 
 }
