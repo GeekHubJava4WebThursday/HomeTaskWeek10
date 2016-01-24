@@ -1,10 +1,11 @@
 package org.geekhub;
 
-import java.io.*;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.regex.Pattern;
 
 /**
  * ImageCrawler downloads all images to specified folder from specified resource.
@@ -15,7 +16,7 @@ public class ImageCrawler {
 
     //number of threads to download images simultaneously
     public static final int NUMBER_OF_THREADS = 10;
-
+    Pattern imagePattern = Pattern.compile(".+\\.(jpg|jpeg|png|bmp|tiff)");
     private ExecutorService executorService = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
     private String folder;
 
@@ -25,11 +26,19 @@ public class ImageCrawler {
 
     /**
      * Call this method to start download images from specified URL.
+     *
      * @param urlToPage
      * @throws IOException
      */
     public void downloadImages(String urlToPage) throws IOException {
-        //implement me
+        URL url = new URL(urlToPage);
+        if (isImageURL(url)) {
+            executorService.submit(new ImageTask(url, folder));
+        } else {
+            Page page = new Page(url);
+            page.getImageLinks().stream().forEach(link -> executorService.submit(new ImageTask(link, folder)));
+        }
+
     }
 
     /**
@@ -41,10 +50,7 @@ public class ImageCrawler {
 
     //detects is current url is an image. Checking for popular extensions should be enough
     private boolean isImageURL(URL url) {
-        //implement me
-        return false;
+        return imagePattern.matcher(url.toString()).matches();
     }
-
-
 
 }

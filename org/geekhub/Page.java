@@ -3,7 +3,9 @@ package org.geekhub;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,6 +22,7 @@ public class Page {
 
     /**
      * Be careful, constructor downloads content, it could be slow.
+     *
      * @param url
      * @throws IOException
      */
@@ -30,6 +33,7 @@ public class Page {
 
     /**
      * Extracts all links from the page like <a href={link}>bla</a>. Method does not cache content. Each time new list will be returned.
+     *
      * @return list of URLs from that page.
      * @throws MalformedURLException
      */
@@ -39,6 +43,7 @@ public class Page {
 
     /**
      * Extracts all links to images from the page like <img src={link}/>. Method does not cache content. Each time new list will be returned.
+     *
      * @return list of URLs to images from that page.
      * @throws MalformedURLException
      */
@@ -48,7 +53,7 @@ public class Page {
 
     private Collection<URL> extractMatches(Matcher matcher) throws MalformedURLException {
         Set<URL> links = new HashSet<>();
-        while(matcher.find()) {
+        while (matcher.find()) {
             links.add(new URL(url, matcher.group(1)));
         }
         return links;

@@ -15,7 +15,7 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         String command;
-        while(!"exit".equals(command = scanner.next())) {
+        while (!"exit".equals(command = scanner.next())) {
             imageCrawler.downloadImages(command);
             System.out.println("...and another url:");
         }
